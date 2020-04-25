@@ -2,7 +2,9 @@
 
 namespace app\controllers;
 
+use app\models\Theme;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
@@ -61,7 +63,14 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $dataProvider = new ActiveDataProvider([
+            'query' => Theme::find()->where(['status' =>2])
+                ->orderBy('date ASC'),
+        ]);
+
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**
@@ -77,6 +86,9 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            if (!Yii::$app->user->identity->isAdmin()) {
+                return $this->redirect('/theme');
+            }
             return $this->goBack();
         }
 
