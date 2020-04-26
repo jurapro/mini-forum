@@ -42,6 +42,8 @@ AppAsset::register($this);
             ['label' => 'Главная', 'url' => ['/site/index']],
             ['label' => 'Регистрация', 'url' => ['/user/create'], 'visible' => Yii::$app->user->isGuest],
             ['label' => 'Личный кабинет', 'url' => ['/theme/index'], 'visible' => !Yii::$app->user->isGuest],
+            ['label' => 'Модерирование тем', 'url' => ['/theme/admin'],
+                'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin()],
             Yii::$app->user->isGuest ? (
             ['label' => 'Вход', 'url' => ['/site/login']]
             ) : (

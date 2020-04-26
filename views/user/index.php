@@ -27,9 +27,18 @@ $this->params['breadcrumbs'][] = $this->title;
             'email:email',
             'name',
             'surname',
-            'password',
-            //'active',
-            //'role',
+            [
+                'attribute' => 'Администрирование',
+                'format' => 'html',
+                'value' => function ($data) {
+                    switch ($data->active) {
+                        case 0:
+                            return Html::a('Разбанить', 'active/?id=' . $data->id);
+                        case 1:
+                            return Html::a('Забанить', 'ban/?id=' . $data->id);
+                    }
+                }
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

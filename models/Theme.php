@@ -84,4 +84,16 @@ class Theme extends \yii\db\ActiveRecord
         }
 
     }
+
+    public function approve()
+    {
+        $this->status = 2;
+        $this->save();
+    }
+
+    public function reject()
+    {
+        $this->status = 3;
+        $this->save();
+    }
 }

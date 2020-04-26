@@ -29,6 +29,9 @@ class AnswerController extends Controller
                         'actions' => ['create'],
                         'allow' => true,
                         'roles' => ['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            return Yii::$app->user->identity->isActive();
+                        }
                     ],
                 ],
             ],
